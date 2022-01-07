@@ -1,0 +1,9 @@
+{
+  "*": [
+    "^.*\\.ts$i",
+    "^.*\\.js$i"
+  ],
+  "zone.js": [
+    "LICENSE.wrapped"
+  ]
+}
