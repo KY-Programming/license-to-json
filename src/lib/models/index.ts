@@ -1,5 +1,6 @@
 ﻿export * from './adapter';
-export * from './github-response';
+export * from './github-branch';
+export * from './github-tree-result';
 export * from './github-tree';
 export * from './result';
 export * from './result-license';

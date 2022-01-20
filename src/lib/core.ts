@@ -1,7 +1,8 @@
-﻿import { Adapter, PackageLockJson, Parameter, Result, ResultLicense, TextSource } from './models';
+﻿import { Adapter, PackageLockJson, Parameter, Result, TextSource } from './models';
 import { AutoDetectAdapter, FileAdapter, GithubAdapter, PackageAdapter } from './adapters';
 import { SpdxAdapter } from './adapters/spdx-adapter';
 import * as fs from 'fs';
+import * as path from 'path';
 import { CleanupAdapter } from './adapters/cleanup.adapter';
 import { Licenses } from './models/licenses';
 
@@ -33,10 +34,11 @@ export class Core {
         for (const dependency of dependencies) {
             const result: Result = this.results[dependency] ?? { package: dependency, licenses: [] };
             this.results[dependency] = result;
+            let packageSuccessful = true;
             for (const adapter of this.adapters) {
-                successful &&= await adapter.execute(result);
+                packageSuccessful = await adapter.execute(result) && packageSuccessful;
             }
-            if (successful) {
+            if (packageSuccessful) {
                 if (result.licenses.length === 0) {
                     console.log(`Found dependency '${dependency}' without license.`);
                 } else if (result.licenses.length === 1) {
@@ -48,6 +50,7 @@ export class Core {
                     console.log(`Found dependency '${dependency}' with ${result.licenses.length} licenses.`);
                 }
             }
+            successful &&= packageSuccessful;
         }
         this.writeLicenses();
         if (!successful) {
@@ -81,13 +84,14 @@ export class Core {
     }
 
     private readLicenses(): void {
-        if (!fs.existsSync(this.parameters.output) || !this.parameters.useCache) {
+        const outputPath = path.join(this.parameters.path, this.parameters.output);
+        if (!this.parameters.useCache || !fs.existsSync(outputPath)) {
             return;
         }
         console.log('Read cached licenses...');
         console.info('HINT: To disable loading cache licenses use \'-no-cache\'.');
         try {
-            const packages: Licenses = JSON.parse(fs.readFileSync(this.parameters.output, 'utf-8'));
+            const packages: Licenses = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
             for (let packageName in packages) {
                 this.results[packageName] = {
                     package: packageName,
@@ -103,12 +107,13 @@ export class Core {
 
     private writeLicenses(): void {
         console.log('write licenses to disc...');
+        const outputPath = path.join(this.parameters.path, this.parameters.output);
         const output: Licenses = {};
         for (const packageName in this.results) {
             const result = this.results[packageName];
             output[result.package] = result.licenses;
         }
-        fs.writeFileSync(this.parameters.output, JSON.stringify(output, undefined, 2));
+        fs.writeFileSync(outputPath, JSON.stringify(output, undefined, 2));
         console.log('DONE');
     }
 }

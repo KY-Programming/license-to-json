@@ -1,5 +1,5 @@
 ﻿import { GithubTree } from './github-tree';
 
-export interface GithubResponse {
+export interface GithubTreeResult {
     tree: GithubTree[];
 }
