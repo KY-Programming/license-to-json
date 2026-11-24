@@ -1,6 +1,6 @@
 # license-to-json (l2j)
 
-| [Documentation](https://mantic-ui.ky-programming.de/semantic/license/use-license-to-json) | [Optional Angular Component](https://mantic-ui.ky-programming.de/semantic/license/angular-component) | [Github Repository](https://github.com/KY-Programming/license-to-json) |
+| [Documentation](https://mantic-ui.ky-programming.de/semantic/license/use-license-to-json) | [Optional Angular Component](https://mantic-ui.ky-programming.de/semantic/license/angular-component) | [Github Repository](https://github.com/KY-Programming/license-to-json) | [Support](https://support.ky-programming.de/) |
 
 license-to-json is a nodejs script to extract license information from all used packages into a single json file. As an alternative to <code>ng build --extract-licenses</code> not only the plain text is extracted an contacted together, it collect missing license information like the license text automatically from the npm package, git repository or spdx (a list of common licenses) and put into a readable json file. Some helper classes prepare everything to use it as easy and beautiful as possible in your frontend.
 

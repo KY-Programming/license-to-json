@@ -1,14 +1,6 @@
 {
   "name": "license-to-json",
   "version": "1.1.0",
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "bin": {
-    "license-to-json": "./cli.js",
-    "l2j": "./cli.js",
-    "ltj": "./cli.js"
-  },
   "description": "license-to-json is a nodejs script to extract license information from all used packages into a single json file. As an alternative to 'ng build --extract-licenses' not only the plain text is extracted an contacted together, it collect missing license information like the license text automatically from the npm package, git repository or spdx (a list of common licenses) and put into a readable json file. Some helper classes prepare everything to use it as easy and beautiful as possible in your frontend.",
   "keywords": [
     "license",
@@ -31,10 +23,6 @@
   },
   "funding": [
     {
-      "type": "patreon",
-      "url": "https://www.patreon.com/kylst"
-    },
-    {
       "type": "paypal",
       "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VFPAP4MKV654A&source=url"
     }
@@ -42,5 +30,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/KY-Programming/license-to-json.git"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "bin": {
+    "license-to-json": "./cli.js",
+    "l2j": "./cli.js",
+    "ltj": "./cli.js"
   }
 }
